@@ -1,11 +1,13 @@
 import React from 'react';
-import { Container } from './styles';
-import { Text } from 'react-native';
+import { Container, LoadingIcon } from './styles';
+
+import BarberLogo from '../../assets/barber.svg';
 
 export default () => {
     return(
         <Container>
-            <Text>Preload Screen</Text>
+            <BarberLogo width='100%' height='160'/>
+            <LoadingIcon size='large' color='#FFFFFF'/>
         </Container>
     );
 }
