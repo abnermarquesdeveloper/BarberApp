@@ -24,7 +24,13 @@ export default (props) => {
     return(
         <InputArea>
             <props.IconSvg width="24" height="24" fill="#268596"/>
-            <Input placeholder={props.placeholder} placeholderTextColor="#268596"/>
+            <Input
+                placeholder={props.placeholder}
+                placeholderTextColor="#268596"
+                value={props.value}
+                onChangeText={props.onChangeText}
+                secureTextEntry={props.password}
+            />
         </InputArea>
     );
 }
