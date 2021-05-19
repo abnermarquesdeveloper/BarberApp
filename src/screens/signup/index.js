@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { UserContext } from '../../contexts/UserContext';
 import { 
     Container,
     InputArea,
@@ -21,8 +23,7 @@ import LockIcon from '../../assets/lock.svg';
 
 export default () => {
 
-    
-
+    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     const [nameField, setNameField] = useState('');
@@ -34,7 +35,18 @@ export default () => {
             
             let resp = await Api.signUp(nameField, emailField, passwordField);
             if(resp.token){
+                await AsyncStorage.setItem('token', resp.token);
+
+                userDispatch({
+                    type: 'setAvatar',
+                    payload: {
+                        avatar: resp.data.avatar
+                    }
+                });
                 alert("Ok! Usuário criado com sucesso!!!");
+                navigation.reset({
+                    routes:[{name: 'MainTab'}]
+                });
             }else{
                 alert("Erro ao criar usuário! "+ resp.error);
             }
