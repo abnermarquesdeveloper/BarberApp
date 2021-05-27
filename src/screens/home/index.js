@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
@@ -18,10 +18,12 @@ import {
     LocationInput,
     LocationFinder,
 
-    LoadingIcon
+    LoadingIcon,
+    ListArea
 
     } from './styles';
 
+import BarberItem from '../../components/BarberItem';
 import SearchIcon from '../../assets/search.svg';
 import MyLocationIcon from '../../assets/my_location.svg';
 
@@ -33,6 +35,7 @@ export default () =>{
     const [coords, setCoords] = useState(null);
     const [loading, setLoading] = useState(false);
     const [listBarbers, setListBarbers] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const handleLocationFinder = async () => {
 
@@ -61,8 +64,11 @@ export default () =>{
         setListBarbers([]);
         
         let res = await Api.getBarbers();
-        console.log(res);
+        //console.log(res);
         if(res.error == ''){
+            if(res.loc){
+                setLocationText(res.loc);
+            }
             setListBarbers(res.data);
         }else{
             alert('Error: '+res.error);
@@ -75,9 +81,16 @@ export default () =>{
         getBarbers();
     },[]);
 
+    const onRefresh = () => {
+        setRefreshing(false);
+        getBarbers();
+    }
+
     return(
         <Container>
-            <Scroller>
+            <Scroller refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+            }>
 
                 <HeaderArea>
                     <HeaderTitle numberOfLines={2}>Encontre o seu barbeiro favorito</HeaderTitle>
@@ -101,6 +114,12 @@ export default () =>{
                 {loading &&
                     <LoadingIcon size="large" color="#FFF"/>
                 }
+
+                <ListArea>
+                    {listBarbers.map((item, k)=>(
+                        <BarberItem key={k} data={item}/>
+                    ))}
+                </ListArea>
 
             </Scroller>
         </Container>
