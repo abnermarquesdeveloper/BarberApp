@@ -47,7 +47,7 @@ export default () =>{
                 PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
         );
 
-        if(result == 'granted'){
+        if(result === 'granted'){
             setLoading(true);
             setLocationText('');
             setListBarbers([]);
@@ -55,15 +55,28 @@ export default () =>{
             Geolocation.getCurrentPosition((info)=>{
                 setCoords(info.coords);
                 getBarbers();
-            });
+                console.log(info);
+            },);
         }
+    }
+
+    const handleLocationSearch = () => {
+        setCoords({});
+        getBarbers();
     }
 
     const getBarbers = async () => {
         setLoading(true);
         setListBarbers([]);
+
+        let lat = null;
+        let lng = null;
+        if(coords){
+            lat = coords.latitude;
+            lng = coords.longitude;
+        }
         
-        let res = await Api.getBarbers();
+        let res = await Api.getBarbers(lat, lng, locationText);
         //console.log(res);
         if(res.error == ''){
             if(res.loc){
@@ -105,6 +118,7 @@ export default () =>{
                         placeholderTextColor="white"
                         value={locationText}
                         onChangeText={t=>setLocationText(t)}
+                        onEndEditing={handleLocationSearch}
                     />
                     <LocationFinder onPress={handleLocationFinder}>
                         <MyLocationIcon width="24" height="24" fill="#FFF"/>
