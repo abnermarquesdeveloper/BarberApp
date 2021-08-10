@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 const BASE_API = "https://api.b7web.com.br/devbarber/api";
+//const BASE_API = "http://127.0.0.1:8000/api";
+
 
 export default {
 
@@ -13,8 +15,7 @@ export default {
             },
             body: JSON.stringify({token})
         });
-        const json = await req.json();
-        return json;
+        return req.json();
     },
 
     signIn: async (email, password) => {
@@ -26,8 +27,7 @@ export default {
             },
             body: JSON.stringify({email, password})
         });
-        const json = await req.json();
-        return json;
+        return req.json();
     },
 
     signUp: async (name, email, password) => {
@@ -39,8 +39,7 @@ export default {
             },
             body: JSON.stringify({name, email, password})
         });
-        const json = await req.json();
-        return json;
+        return req.json();
     },
 
     logOut: async () => {
