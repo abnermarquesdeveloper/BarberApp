@@ -27,7 +27,10 @@ export const SwipeImage = styled.Image`
     height: 240px;
 `;
 
-export const FakeSwiper = styled.View``;
+export const FakeSwiper = styled.View`
+    height: 140px;
+    background-color: #63C2D1;
+`;
 
 export const PageBody = styled.View`
     background-color: #FFF;
@@ -36,8 +39,52 @@ export const PageBody = styled.View`
     min-height: 400px;
 `;
 
-export const UserInfoArea = styled.View``;
+export const UserInfoArea = styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+`;
+
+export const UserAvatar = styled.Image`
+    width: 110px;
+    height: 110px;
+    margin-top: -50px;
+    margin-left: 20px;
+    border-radius: 20px;
+    border-width: 3px;
+    border-color: #DDD;
+`;
+
+export const UserInfo = styled.View`
+    margin: 5px;
+`;
+
+export const UserInfoName = styled.Text`
+    align-self: center;
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 5px;
+`;
+
+export const UserFavButton = styled.TouchableOpacity`
+    margin-top: -20px;
+    width: 40px;
+    height: 40px;
+    background-color: #FFF;
+    border: 2px solid #DDD;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+`;
+
 
 export const ServiceArea = styled.View``;
 
 export const TestimonialArea = styled.View``;
+
+export const BackButton = styled.TouchableOpacity`
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 9;
+`;

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
+import Stars from '../../components/Stars';
+import FavoriteIcon from '../../assets/favorite.svg';
+import BackIcon from '../../assets/back.svg';
 import {
     Container,
     Scroller,
@@ -11,7 +14,12 @@ import {
     PageBody,
     UserInfoArea,
     ServiceArea,
-    TestimonialArea
+    TestimonialArea,
+    UserAvatar,
+    UserInfo,
+    UserInfoName,
+    UserFavButton,
+    BackButton
     } from './styles';
 
 import Api from '../../Api';
@@ -19,7 +27,7 @@ import Api from '../../Api';
 
 export default () =>{
 
-    //const navigation = useNavigation();
+    const navigation = useNavigation();
     const route = useRoute();
 
     const [barberInfo, setBarberInfo] = useState({
@@ -45,6 +53,10 @@ export default () =>{
         getBarberInfo();
     },[]);
 
+    const handleBackButton = () => {
+        navigation.goBack();
+    }
+
     return(
         <Container>
             <Scroller>
@@ -69,7 +81,14 @@ export default () =>{
                 }
                 <PageBody>
                     <UserInfoArea>
-
+                        <UserAvatar source={{uri:barberInfo.avatar}}/>
+                        <UserInfo>
+                            <UserInfoName>{barberInfo.name}</UserInfoName>
+                            <Stars stars={barberInfo.stars} showNumber/>
+                        </UserInfo>
+                        <UserFavButton>
+                            <FavoriteIcon width="24" height="24" fill="#FF0000"/>
+                        </UserFavButton>
                     </UserInfoArea>
                     <ServiceArea>
 
@@ -79,6 +98,12 @@ export default () =>{
                     </TestimonialArea>
                 </PageBody>
             </Scroller>
+            
+            {/*O botão pode ir em qualquer lugar porque será usado a POSITION: Absolute; em sua estilização*/}
+            <BackButton onPress={handleBackButton}>
+                <BackIcon width="44" height="44" fill="#FFF"/>
+            </BackButton>
+
         </Container>
     );
 }
