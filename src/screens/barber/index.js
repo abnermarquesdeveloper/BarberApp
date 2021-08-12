@@ -4,22 +4,11 @@ import Swiper from 'react-native-swiper';
 import Stars from '../../components/Stars';
 import FavoriteIcon from '../../assets/favorite.svg';
 import BackIcon from '../../assets/back.svg';
-import {
-    Container,
-    Scroller,
-    FakeSwiper,
-    SwipeDot,
-    SwipeItem,
-    SwipeImage,
-    PageBody,
-    UserInfoArea,
-    ServiceArea,
-    TestimonialArea,
-    UserAvatar,
-    UserInfo,
-    UserInfoName,
-    UserFavButton,
-    BackButton
+import { Container,Scroller,PageBody,LoadinIcon,
+        FakeSwiper,SwipeDot,SwipeItem,SwipeImage,BackButton,
+        UserAvatar,UserInfo,UserInfoName,UserFavButton,UserInfoArea,
+        ServiceArea,ServicesTitle,ServiceItem,ServiceInfo,ServiceName,ServicePrice,ServiceChooseButton,ServiceChooseBtnText,
+        TestimonialArea,
     } from './styles';
 
 import Api from '../../Api';
@@ -90,9 +79,27 @@ export default () =>{
                             <FavoriteIcon width="24" height="24" fill="#FF0000"/>
                         </UserFavButton>
                     </UserInfoArea>
-                    <ServiceArea>
 
-                    </ServiceArea>
+                    {loading &&
+                        <LoadinIcon size="large" color="#000" />
+                    }
+
+                    {barberInfo.services &&
+                        <ServiceArea>
+                            <ServicesTitle>Lista de Serviços</ServicesTitle>
+                            {barberInfo.services.map((item, key)=>(
+                                <ServiceItem key={key}>
+                                    <ServiceInfo>
+                                        <ServiceName>{item.name}</ServiceName>
+                                        <ServicePrice>R$ {item.price}</ServicePrice>
+                                    </ServiceInfo>
+                                    <ServiceChooseButton>
+                                        <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
+                                    </ServiceChooseButton>
+                                </ServiceItem>
+                            ))}
+                        </ServiceArea>
+                    }
                     <TestimonialArea>
 
                     </TestimonialArea>
